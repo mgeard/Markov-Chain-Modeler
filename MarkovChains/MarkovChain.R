@@ -1,20 +1,20 @@
-library(markovchain)
-library(igraph)
+require(markovchain)
+require(igraph)
 
 mat <- matrix(
-  c(
-	3 / 4, 1 / 4, 0,
-	0, 2 / 3, 1 / 3,
-	1 / 4, 1 / 4, 1 / 2
-  ),
-  nrow = 3,
-  byrow = TRUE
+	c(
+		0.65, 0.25, 0.10,
+		0.15, 0.65, 0.20,
+		0.10, 0.40, 0.50
+	),
+	nrow = 3,
+	byrow = TRUE
 )
 
 ourMarkovChain <- new(
-  "markovchain",
-  states = c("X", "Y", "Z"),
-  transitionMatrix = mat
+	"markovchain",
+	states = c("BA", "A", "AA"),
+	transitionMatrix = mat
 )
 
 PlotMarkovChain <- function(markovChain, steps = 1) {
@@ -24,13 +24,13 @@ PlotMarkovChain <- function(markovChain, steps = 1) {
 
 	markovChain <- markovChain ^ steps
 	g <- as(markovChain, "igraph")
-
+	
 	plot(
 		g,
 		margin = 0.25,
 		vertex.shape = "circle",
-		vertex.size = 20,
-		vertex.color = c("peachpuff4", "green4", "yellow4", "brown", "antiquewhite4", "red", "blue"),
+		vertex.size = 30,
+		vertex.color = c("peachpuff4", "green4", "yellow4", "brown", "antiquewhite4", "red", "blue"), #rainbow(length(names(markovChain))),
 		vertex.frame.color = NA,
 		vertex.label.color = "white",
 		vertex.label.font = 2,
@@ -50,4 +50,4 @@ PlotMarkovChain <- function(markovChain, steps = 1) {
 
 }
 
-PlotMarkovChain(ourMarkovChain, 1000)
+PlotMarkovChain(ourMarkovChain)
